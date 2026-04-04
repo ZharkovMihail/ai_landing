@@ -6,7 +6,7 @@ export default function ContactForm() {
   const [form, setForm] = useState({ name: "", phone: "", description: "" });
 
   return (
-    <section className="bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5">
+    <section id="contact" className="bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5">
       <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717]">
         Готовы обсудить ваш проект?
       </h2>
