@@ -1,0 +1,70 @@
+import Image from "next/image";
+import { imgIconTeam, imgIconProjects, imgIconMvp, imgIconPrice } from "@/app/lib/assets";
+
+const features = [
+  {
+    icon: imgIconTeam,
+    label: "Команда из крупных IT-компаний",
+    rotate: false,
+  },
+  {
+    icon: imgIconProjects,
+    label: "N+ завершённых проектов",
+    rotate: false,
+  },
+  {
+    icon: imgIconMvp,
+    label: "MVP за N дней",
+    rotate: false,
+  },
+  {
+    icon: imgIconPrice,
+    label: "Фиксированная цена в договоре",
+    rotate: true,
+  },
+];
+
+export default function Features() {
+  return (
+    <section className="flex flex-col gap-[30px] items-start px-5">
+      {/* First row — single item */}
+      <div className="flex items-start">
+        <FeatureItem icon={features[0].icon} label={features[0].label} rotate={false} />
+      </div>
+      {/* Second row — two items */}
+      <div className="flex gap-5 items-start">
+        <FeatureItem icon={features[1].icon} label={features[1].label} rotate={false} />
+        <FeatureItem icon={features[2].icon} label={features[2].label} rotate={false} />
+      </div>
+      {/* Third row — right aligned */}
+      <div className="flex items-start justify-end w-full">
+        <FeatureItem icon={features[3].icon} label={features[3].label} rotate />
+      </div>
+    </section>
+  );
+}
+
+function FeatureItem({
+  icon,
+  label,
+  rotate,
+}: {
+  icon: string;
+  label: string;
+  rotate: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-1 items-start w-[165px]">
+      <div className="relative w-10 h-10 shrink-0">
+        <Image
+          src={icon}
+          alt=""
+          fill
+          className={`object-cover ${rotate ? "rotate-[29deg]" : ""}`}
+          unoptimized
+        />
+      </div>
+      <p className="font-semibold text-[16px] leading-[20px] text-[#171717]">{label}</p>
+    </div>
+  );
+}
