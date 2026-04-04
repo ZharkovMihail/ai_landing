@@ -2,7 +2,7 @@ const steps = [
   {
     number: "01",
     title: "Бесплатная оценка",
-    description: "Опишите задачу, мы оценим сроки и стоимость за 24 часа",
+    description: "Опишите задачу, мы оценим сроки и стоимость за\u00A024\u00A0часа",
     showDescription: true,
   },
   { number: "02", title: "Фиксация условий", showDescription: false },
@@ -14,7 +14,7 @@ export default function Process() {
   return (
     <section className="flex flex-col gap-[30px] items-center px-5">
       <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717] w-full">
-        От идеи до запуска —{" "}
+        От идеи до запуска -{" "}
         <span className="block">4 простых шага</span>
       </h2>
       <div className="bg-white flex flex-col gap-[10px] items-start p-5 rounded-[24px] w-full">

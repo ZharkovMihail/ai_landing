@@ -12,7 +12,7 @@ export default function Services() {
         {/* Card 1 — AI */}
         <div className="bg-white flex flex-col gap-5 h-[250px] items-start overflow-clip p-5 relative rounded-[14px] w-[310px]">
           <p className="font-semibold text-[16px] leading-[20px] text-[#171717] shrink-0">
-            AI-решения под заказ
+            AI-решения под{"\u00A0"}заказ
           </p>
           <ul className="list-disc font-normal text-[16px] leading-[20px] text-[#454545] shrink-0">
             <li className="ms-6">чат-боты</li>
@@ -29,7 +29,7 @@ export default function Services() {
         {/* Card 2 — Vibe (snake) */}
         <div className="bg-white flex flex-col gap-5 h-[250px] items-start overflow-clip p-5 relative rounded-[14px] w-[310px]">
           <p className="font-semibold text-[16px] leading-[20px] text-[#171717] shrink-0">
-            Вайбкодинг приложений и сервисов
+            Вайбкодинг приложений и{"\u00A0"}сервисов
           </p>
           <ul className="list-disc font-normal text-[16px] leading-[20px] text-[#454545] shrink-0">
             <li className="ms-6">MVP</li>

@@ -4,7 +4,7 @@ import { imgIconTeam, imgIconProjects, imgIconMvp, imgIconPrice } from "@/app/li
 const features = [
   {
     icon: imgIconTeam,
-    label: "Команда из крупных IT-компаний",
+    label: "Команда из\u00A0крупных IT-компаний",
     rotate: false,
   },
   {
@@ -14,12 +14,12 @@ const features = [
   },
   {
     icon: imgIconMvp,
-    label: "MVP за N дней",
+    label: "MVP за\u00A0N\u00A0дней",
     rotate: false,
   },
   {
     icon: imgIconPrice,
-    label: "Фиксированная цена в договоре",
+    label: "Фиксированная цена в\u00A0договоре",
     rotate: true,
   },
 ];
