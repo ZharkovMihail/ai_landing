@@ -71,9 +71,9 @@ export default function Process() {
       userPausedRef.current = true;
       stop();
       activeStepRef.current = index;
-      progressRef.current = 0;
+      progressRef.current = 1;
       setActiveStep(index);
-      setProgress(0);
+      setProgress(1);
     },
     [stop]
   );
