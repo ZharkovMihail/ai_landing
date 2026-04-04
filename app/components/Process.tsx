@@ -1,40 +1,156 @@
+"use client";
+
+import { useState, useEffect, useRef, useCallback } from "react";
+
+const STEP_DURATION = 4500;
+
 const steps = [
   {
     number: "01",
     title: "Бесплатная оценка",
     description: "Опишите задачу, мы оценим сроки и стоимость за\u00A024\u00A0часа",
-    showDescription: true,
   },
-  { number: "02", title: "Фиксация условий", showDescription: false },
-  { number: "03", title: "Разработка", showDescription: false },
-  { number: "04", title: "Запуск + поддержка", showDescription: false },
+  { number: "02", title: "Фиксация условий", description: null },
+  { number: "03", title: "Разработка", description: null },
+  { number: "04", title: "Запуск + поддержка", description: null },
 ];
 
 export default function Process() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const activeStepRef = useRef(0);
+  const progressRef = useRef(0);
+  const lastTsRef = useRef<number | null>(null);
+  const isRunningRef = useRef(false);
+  const userPausedRef = useRef(false);
+
+  const stop = useCallback(() => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    lastTsRef.current = null;
+    isRunningRef.current = false;
+  }, []);
+
+  const start = useCallback(() => {
+    if (isRunningRef.current) return;
+    isRunningRef.current = true;
+    lastTsRef.current = null;
+
+    const tick = (ts: number) => {
+      if (!isRunningRef.current) return;
+
+      if (lastTsRef.current === null) lastTsRef.current = ts;
+      const delta = ts - lastTsRef.current;
+      lastTsRef.current = ts;
+
+      progressRef.current = Math.min(progressRef.current + delta / STEP_DURATION, 1);
+      setProgress(progressRef.current);
+
+      if (progressRef.current >= 1) {
+        const next = (activeStepRef.current + 1) % steps.length;
+        activeStepRef.current = next;
+        setActiveStep(next);
+        progressRef.current = 0;
+        setProgress(0);
+        lastTsRef.current = null;
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const activate = useCallback(
+    (index: number) => {
+      userPausedRef.current = true;
+      stop();
+      activeStepRef.current = index;
+      progressRef.current = 0;
+      setActiveStep(index);
+      setProgress(0);
+    },
+    [stop]
+  );
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !userPausedRef.current) {
+          start();
+        } else if (!entry.isIntersecting) {
+          stop();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [start, stop]);
+
   return (
-    <section className="flex flex-col gap-[30px] items-center px-5">
+    <section ref={sectionRef} className="flex flex-col gap-[30px] items-center px-5">
       <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717] w-full">
         От идеи до запуска -{" "}
         <span className="block">4 простых шага</span>
       </h2>
       <div className="bg-white flex flex-col gap-[10px] items-start p-5 rounded-[24px] w-full">
-        {steps.map((step) => (
-          <div
-            key={step.number}
-            className="bg-[#f5f5f5] border border-[#f7f7f7] flex gap-5 items-start p-[14px] rounded-[10px] w-full"
-          >
-            <div className="flex flex-col gap-[10px] flex-1 min-w-0">
-              <p className="font-semibold text-[16px] leading-[20px] text-[#171717]">
-                {step.number} {step.title}
-              </p>
-              {step.showDescription && (
-                <p className="font-normal text-[16px] leading-[20px] text-[#737373]">
-                  {step.description}
+        {steps.map((step, i) => {
+          const isActive = activeStep === i;
+          return (
+            <button
+              key={step.number}
+              onClick={() => activate(i)}
+              className="bg-[#f5f5f5] border border-[#f7f7f7] flex gap-5 items-start p-[14px] rounded-[10px] w-full text-left"
+            >
+              {/* Bar */}
+              <div className="relative shrink-0 self-stretch w-[2px] bg-[#d1d1d1] overflow-hidden rounded-full">
+                <div
+                  className="absolute top-0 left-0 w-full bg-[#E84D2A] rounded-full"
+                  style={{
+                    height: "100%",
+                    transform: `scaleY(${isActive ? progress : 0})`,
+                    transformOrigin: "top",
+                  }}
+                />
+              </div>
+              {/* Content */}
+              <div className="flex flex-col gap-[10px] flex-1 min-w-0">
+                <p
+                  className="font-semibold text-[16px] leading-[20px] transition-colors duration-200"
+                  style={{ color: isActive ? "#171717" : "#737373" }}
+                >
+                  {step.number} {step.title}
                 </p>
-              )}
-            </div>
-          </div>
-        ))}
+                {step.description && (
+                  <div
+                    className="overflow-hidden transition-all duration-300 ease-in-out"
+                    style={{
+                      maxHeight: isActive ? "80px" : "0px",
+                      opacity: isActive ? 1 : 0,
+                    }}
+                  >
+                    <p className="font-normal text-[16px] leading-[20px] text-[#737373]">
+                      {step.description}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </section>
   );
