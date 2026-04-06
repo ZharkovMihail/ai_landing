@@ -4,7 +4,7 @@ import QuizTrigger from "./QuizTrigger";
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col gap-[50px] items-center justify-end h-[100dvh] px-5 pb-[80px] pt-5 rounded-b-[24px] overflow-hidden">
+    <section className="relative flex flex-col gap-[50px] items-center justify-end h-[100lvh] px-5 pb-[80px] pt-5 rounded-b-[24px] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#171717] rounded-b-[24px]" />
       <Image
