@@ -10,9 +10,21 @@ const steps = [
     title: "Бесплатная оценка",
     description: "Опишите задачу, мы оценим сроки и стоимость за\u00A024\u00A0часа",
   },
-  { number: "02", title: "Фиксация условий", description: null },
-  { number: "03", title: "Разработка", description: null },
-  { number: "04", title: "Запуск + поддержка", description: null },
+  {
+    number: "02",
+    title: "Фиксация условий",
+    description: "Договор с фиксированной ценой, чёткие сроки, никаких сюрпризов",
+  },
+  {
+    number: "03",
+    title: "Разработка",
+    description: "Работаем спринтами, показываем промежуточные результаты каждую неделю",
+  },
+  {
+    number: "04",
+    title: "Запуск + поддержка",
+    description: "Деплой, тестирование, передача и гарантийная поддержка",
+  },
 ];
 
 export default function Process() {
@@ -113,7 +125,7 @@ export default function Process() {
             <button
               key={step.number}
               onClick={() => activate(i)}
-              className="bg-[#f5f5f5] border border-[#f7f7f7] flex gap-5 items-start p-[14px] rounded-[10px] w-full text-left"
+              className={`bg-[#f5f5f5] border border-[#f7f7f7] flex gap-5 p-[14px] rounded-[10px] w-full text-left transition-all duration-300 ${isActive ? "items-start" : "items-center"}`}
             >
               {/* Bar */}
               <div className="relative shrink-0 self-stretch w-[2px] bg-[#d1d1d1] overflow-hidden rounded-full">
@@ -138,7 +150,7 @@ export default function Process() {
                   <div
                     className="overflow-hidden transition-all duration-300 ease-in-out"
                     style={{
-                      maxHeight: isActive ? "80px" : "0px",
+                      maxHeight: isActive ? "100px" : "0px",
                       opacity: isActive ? 1 : 0,
                     }}
                   >
