@@ -24,7 +24,7 @@ const cases = [
 
 export default function Cases() {
   return (
-    <section className="flex flex-col gap-[30px] items-start px-5">
+    <section id="cases" className="scroll-mt-[120px] flex flex-col gap-[30px] items-start px-5">
       <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717]">Кейсы</h2>
 
       {cases.map((c, i) => (
