@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { imgHeroBg } from "@/app/lib/assets";
+import QuizTrigger from "./QuizTrigger";
 
 export default function Hero() {
   return (
@@ -35,9 +36,7 @@ export default function Hero() {
         <a href="#contact" className="w-full bg-[#171717] rounded-[10px] px-3 py-[14px] text-[#f7f7f7] text-[20px] font-semibold text-center block">
           Обсудить проект
         </a>
-        <button className="w-full bg-[#f5f5f5] rounded-[10px] px-3 py-[14px] text-[#171717] text-[20px] font-semibold text-center">
-          Рассчитать стоимость
-        </button>
+        <QuizTrigger />
       </div>
     </section>
   );
