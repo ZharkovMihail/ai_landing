@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { imgLogoWhite, imgMenuIcon, imgSocialIcon } from "@/app/lib/assets";
+import { imgLogoWhite, imgSocialIcon } from "@/app/lib/assets";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,13 +15,39 @@ export default function Header() {
           <Image src={imgLogoWhite} alt="ToTheMoonTeam logo" fill className="object-cover" unoptimized />
         </div>
         <button onClick={() => setIsOpen((v) => !v)} className="relative shrink-0 flex items-center justify-center w-[30.5px] h-4">
-          {isOpen ? (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M1 1L17 17M17 1L1 17" stroke="#f5f5f5" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          ) : (
-            <Image src={imgMenuIcon} alt="Menu" fill className="object-contain" unoptimized />
-          )}
+          <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
+            {/* Top line → left arm of X */}
+            <line
+              x1="0" y1="1" x2="24" y2="1"
+              stroke="#f5f5f5" strokeWidth="2" strokeLinecap="round"
+              style={{
+                transformOrigin: "12px 1px",
+                transform: isOpen ? "translateY(7px) rotate(45deg)" : "none",
+                transition: "transform 0.3s ease",
+              }}
+            />
+            {/* Middle line → fades out */}
+            <line
+              x1="0" y1="8" x2="24" y2="8"
+              stroke="#f5f5f5" strokeWidth="2" strokeLinecap="round"
+              style={{
+                transformOrigin: "12px 8px",
+                opacity: isOpen ? 0 : 1,
+                transform: isOpen ? "scaleX(0)" : "none",
+                transition: "opacity 0.2s ease, transform 0.2s ease",
+              }}
+            />
+            {/* Bottom line → right arm of X */}
+            <line
+              x1="0" y1="15" x2="24" y2="15"
+              stroke="#f5f5f5" strokeWidth="2" strokeLinecap="round"
+              style={{
+                transformOrigin: "12px 15px",
+                transform: isOpen ? "translateY(-7px) rotate(-45deg)" : "none",
+                transition: "transform 0.3s ease",
+              }}
+            />
+          </svg>
         </button>
       </div>
 
