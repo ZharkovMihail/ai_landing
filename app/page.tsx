@@ -10,11 +10,8 @@ import Footer from "@/app/components/Footer";
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen max-w-[390px] mx-auto">
-      {/* Hero block with header inside dark bg */}
-      <div className="bg-[#070504] rounded-b-[24px]">
-        <Header />
-        <Hero />
-      </div>
+      <Header />
+      <Hero />
 
       {/* Page sections */}
       <div className="flex flex-col gap-[60px] py-[60px]">
