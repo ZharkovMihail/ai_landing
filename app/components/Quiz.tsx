@@ -74,7 +74,7 @@ function QuestionBlock({
               className="shrink-0 size-[12px] rounded-full transition-colors duration-200"
               style={{
                 backgroundColor:
-                  selected === opt ? "#ffffff" : "rgba(255,255,255,0.3)",
+                  selected === opt ? "#ffffff" : "#171717",
               }}
             />
             <span className="text-[#f5f5f5] text-[16px] leading-[20px] whitespace-nowrap">
@@ -159,8 +159,10 @@ export default function Quiz({ isOpen, onClose }: Props) {
           setNewBlockIndex(blockIndex + 1);
           setVisibleBlocks(blockIndex + 2);
         } else {
-          setNewBlockIndex(3);
-          setShowInput(true);
+          // Delay input appearance so it doesn't overlap with the last message
+          setTimeout(() => {
+            setShowInput(true);
+          }, 400);
         }
       }, 500);
     },
@@ -168,23 +170,47 @@ export default function Quiz({ isOpen, onClose }: Props) {
   );
 
   const handleBack = useCallback(() => {
-    setVisibleBlocks(1);
-    setAnswers([null, null, null]);
-    setPending(null);
-    setShowInput(false);
-    setContact("");
-    setIsDone(false);
-    setNewBlockIndex(null);
-  }, []);
+    if (showInput) {
+      setShowInput(false);
+      setContact("");
+      setAnswers((prev) => {
+        const next = [...prev];
+        next[2] = null;
+        return next;
+      });
+      setNewBlockIndex(null);
+    } else if (visibleBlocks > 1) {
+      const prevVisible = visibleBlocks - 1;
+      setVisibleBlocks(prevVisible);
+      setAnswers((prev) => {
+        const next = [...prev];
+        next[prevVisible - 1] = null;
+        return next;
+      });
+      setPending(null);
+      setNewBlockIndex(null);
+    }
+  }, [showInput, visibleBlocks]);
 
   const handleSubmit = useCallback(() => {
     if (!contact.trim()) return;
     setIsDone(true);
   }, [contact]);
 
+  const handleReset = useCallback(() => {
+    setVisibleBlocks(1);
+    setAnswers([null, null, null]);
+    setPending(null);
+    setShowInput(false);
+    setContact("");
+    setIsDone(false);
+    setNewBlockIndex(0);
+  }, []);
+
   if (!isOpen) return null;
 
   const filledDots = isDone ? 4 : showInput ? 4 : visibleBlocks;
+  const showBackButton = visibleBlocks > 1 || showInput;
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-end items-end px-5 pb-5 gap-5">
@@ -200,7 +226,7 @@ export default function Quiz({ isOpen, onClose }: Props) {
               Ваша оценка отправлена
             </p>
             <button
-              onClick={handleBack}
+              onClick={handleReset}
               className="font-semibold text-[16px] leading-[20px] text-[#f5f5f5]"
             >
               Начать сначала
@@ -247,9 +273,9 @@ export default function Quiz({ isOpen, onClose }: Props) {
             </div>
 
             {/* Bottom bar */}
-            <div className="shrink-0 px-5 pb-5 flex flex-col gap-[10px]">
+            <div className="shrink-0 px-5 pb-5 pt-[14px] flex flex-col gap-[10px]">
               {showInput && (
-                <div className="bg-[#e15b34] rounded-[10px] h-[80px] flex items-center px-[14px] gap-[10px]">
+                <div className="bg-[#e15b34] rounded-[10px] flex items-center px-[14px] py-[14px] gap-[10px]">
                   <input
                     ref={inputRef}
                     type="text"
@@ -257,7 +283,7 @@ export default function Quiz({ isOpen, onClose }: Props) {
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                    className="flex-1 bg-transparent text-[16px] leading-[20px] outline-none"
+                    className="flex-1 bg-transparent text-[16px] leading-[20px] outline-none placeholder:text-white/60"
                     style={{ color: "#f5f5f5" }}
                   />
                   <button
@@ -266,7 +292,7 @@ export default function Quiz({ isOpen, onClose }: Props) {
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                       <path
-                        d="M4 10H16M16 10L11 5M16 10L11 15"
+                        d="M18.3334 1.66669L9.16675 10.8334M18.3334 1.66669L12.5001 18.3334L9.16675 10.8334M18.3334 1.66669L1.66675 7.50002L9.16675 10.8334"
                         stroke="#f5f5f5"
                         strokeWidth="1.5"
                         strokeLinecap="round"
@@ -289,12 +315,14 @@ export default function Quiz({ isOpen, onClose }: Props) {
                     />
                   ))}
                 </div>
-                <button
-                  onClick={handleBack}
-                  className="font-semibold text-[12px] leading-[20px] text-[#f5f5f5]"
-                >
-                  Назад
-                </button>
+                {showBackButton && (
+                  <button
+                    onClick={handleBack}
+                    className="font-semibold text-[12px] leading-[20px] text-[#f5f5f5]"
+                  >
+                    Назад
+                  </button>
+                )}
               </div>
             </div>
           </>
