@@ -3,7 +3,7 @@ import { imgServiceAi, imgServiceVibe, imgServiceImprove } from "@/app/lib/asset
 
 export default function Services() {
   return (
-    <section id="services" className="scroll-mt-[120px] bg-[#171717] flex flex-col gap-[30px] items-start overflow-clip p-5 rounded-[24px] mx-5">
+    <section id="services" className="scroll-mt-[80px] bg-[#171717] flex flex-col gap-[30px] items-start overflow-clip p-5 rounded-[24px] mx-5">
       <h2 className="font-extrabold text-[30px] leading-[32px] text-white">
         Какие задачи мы решаем
       </h2>

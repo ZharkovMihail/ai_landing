@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#070504] rounded-b-[14px] max-w-[390px] mx-auto overflow-hidden">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-5 pt-[60px] pb-[10px]">
+      <div className="flex items-center justify-between px-5 pt-[20px] pb-[10px]">
         <div className="relative w-10 h-10 shrink-0">
           <Image src={imgLogoWhite} alt="ToTheMoonTeam logo" fill className="object-cover" unoptimized />
         </div>
