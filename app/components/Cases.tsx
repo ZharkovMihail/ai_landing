@@ -1,24 +1,27 @@
 import Image from "next/image";
-import { imgCaseCover } from "@/app/lib/assets";
+import { imgCaseCover1, imgCaseCover2, imgCaseCover3 } from "@/app/lib/assets";
 
 const cases = [
   {
     tag: "вайбкодинг",
-    title: "Разработка сервиса по внутренней аналитике от ИдеалТРЕЙД",
+    image: imgCaseCover1,
+    title: "Проект под NDA",
     description:
-      "Реализованы интеграции с 1C, mango api, Google Docs и внутренней CRM. Реализовано распознавание голоса и аналитика звонков по голосу",
+      "Разработан веб-сервис для общения с языковой моделью в стиле заданного персонажа или набора характеристик с возможностью гибкой настройки. Платформа поддерживает генерацию AI-контента, включая изображения, с перспективой добавления аудио и видео.",
   },
   {
-    tag: null,
-    title: "Разработка сервиса по внутренней аналитике от ИдеалТРЕЙД",
+    tag: "AI-аналитика",
+    image: imgCaseCover2,
+    title: "Приложение для OZON — my.blaber.ai",
     description:
-      "Реализованы интеграции с 1C, mango api, Google Docs и внутренней CRM. Реализовано распознавание голоса и аналитика звонков по голосу",
+      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и Yandex и дает оценку каждому сайту на наличие негативной и позитивной информации.",
   },
   {
-    tag: null,
-    title: "Разработка сервиса по внутренней аналитике от ИдеалТРЕЙД",
+    tag: "AI-платформа",
+    image: imgCaseCover3,
+    title: "REPUTATE",
     description:
-      "Реализованы интеграции с 1C, mango api, Google Docs и внутренней CRM. Реализовано распознавание голоса и аналитика звонков по голосу",
+      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и Yandex и дает оценку каждому сайту на наличие негативной и позитивной информации.",
   },
 ];
 
@@ -31,7 +34,7 @@ export default function Cases() {
         <div key={i} className="flex flex-col gap-[10px] items-start w-full">
           {/* Image */}
           <div className="overflow-hidden relative rounded-[14px] w-full aspect-video">
-            <Image src={imgCaseCover} alt="" fill className="object-cover" unoptimized />
+            <Image src={c.image} alt="" fill className="object-cover" unoptimized />
             {c.tag && (
               <div className="absolute left-[11px] top-[10px] backdrop-blur-[5px] bg-[rgba(69,69,69,0.6)] px-[10px] py-[6px] rounded-[5px]">
                 <span className="font-semibold text-[12px] leading-[20px] text-[#f5f5f5]">

@@ -13,8 +13,11 @@ export const imgServiceAi = "/images/service-ai.png";
 export const imgServiceVibe = "/images/service-vibe.png";
 export const imgServiceImprove = "/images/service-improve.png";
 
-// Case cover image
+// Case cover images
 export const imgCaseCover = "/images/case-cover.png";
+export const imgCaseCover1 = "/images/case-cover-1.png";
+export const imgCaseCover2 = "/images/case-cover-2.png";
+export const imgCaseCover3 = "/images/case-cover-3.png";
 
 // Footer social icon
 export const imgSocialIcon = "/images/social-icon.png";

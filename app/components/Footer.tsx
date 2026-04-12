@@ -15,9 +15,9 @@ export default function Footer() {
           <p className="font-semibold text-[16px] leading-[20px] text-white">
             tothemoonteam@gmail.com
           </p>
-          <div className="relative w-[25px] h-[25px] shrink-0">
-            <Image src={imgSocialIcon} alt="Social" fill className="object-cover" unoptimized />
-          </div>
+          <a href="https://t.me/isaev_wrk" target="_blank" rel="noopener noreferrer" className="relative w-[40px] h-[40px] shrink-0 block">
+            <Image src={imgSocialIcon} alt="Telegram" fill className="object-cover" unoptimized />
+          </a>
         </div>
         <p className="font-semibold text-[12px] leading-[20px] text-white">
           Политика конфиденциальности

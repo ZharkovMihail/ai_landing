@@ -83,9 +83,9 @@ export default function Header() {
             >
               tothemoonteam@gmail.com
             </a>
-            <div className="relative w-[25px] h-[25px] shrink-0">
+            <a href="https://t.me/isaev_wrk" target="_blank" rel="noopener noreferrer" className="relative w-[40px] h-[40px] shrink-0 block">
               <Image src={imgSocialIcon} alt="Telegram" fill className="object-cover" unoptimized />
-            </div>
+            </a>
           </div>
         </div>
       </div>
