@@ -9,12 +9,12 @@ import Footer from "@/app/components/Footer";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen max-w-[390px] mx-auto">
+    <main className="flex flex-col min-h-screen max-w-[390px] mx-auto lg:max-w-none lg:mx-0">
       <Header />
       <Hero />
 
       {/* Page sections */}
-      <div className="flex flex-col gap-[60px] py-[60px]">
+      <div className="flex flex-col gap-[60px] py-[60px] lg:gap-[120px] lg:py-[120px]">
         <Features />
         <Services />
         <Cases />
@@ -22,7 +22,7 @@ export default function Home() {
         <ContactForm />
       </div>
 
-      <Footer />
+      <Footer className="lg:hidden" />
     </main>
   );
 }

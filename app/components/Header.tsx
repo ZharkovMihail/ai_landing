@@ -8,9 +8,9 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-[#070504] rounded-b-[14px] max-w-[390px] mx-auto overflow-hidden">
+    <header className="fixed inset-x-0 top-0 z-50 bg-[#070504] rounded-b-[14px] overflow-hidden">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-5 pt-[20px] pb-[10px]">
+      <div className="flex items-center justify-between px-5 pt-[20px] pb-[10px] lg:px-[70px] lg:py-[20px]">
         <div className="relative w-10 h-10 shrink-0">
           <Image src={imgLogoWhite} alt="ToTheMoonTeam logo" fill className="object-cover" unoptimized />
         </div>
@@ -56,7 +56,7 @@ export default function Header() {
         className="transition-all duration-300 ease-in-out overflow-hidden"
         style={{ maxHeight: isOpen ? "300px" : "0px", opacity: isOpen ? 1 : 0 }}
       >
-        <div className="flex flex-col gap-[10px] px-5 pt-[10px] pb-[20px]">
+        <div className="flex flex-col gap-[10px] px-5 pt-[10px] pb-[20px] lg:px-[70px] lg:pb-[30px]">
           {/* Nav links */}
           <div className="flex flex-col gap-[10px]">
             <a

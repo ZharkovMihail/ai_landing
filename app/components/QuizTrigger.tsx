@@ -8,7 +8,7 @@ export default function QuizTrigger() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full bg-[#f5f5f5] rounded-[10px] px-3 py-[14px] text-[#171717] text-[20px] font-semibold text-center"
+        className="w-full bg-[#f5f5f5] rounded-[10px] px-3 py-[14px] text-[#171717] text-[20px] font-semibold text-center lg:w-[418px] lg:text-[28px] lg:py-5"
       >
         Рассчитать стоимость
       </button>

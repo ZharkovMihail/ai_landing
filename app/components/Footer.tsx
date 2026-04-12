@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { imgSocialIcon } from "@/app/lib/assets";
 
-export default function Footer() {
+export default function Footer({ className = "" }: { className?: string }) {
   return (
-    <footer className="bg-[#171717] flex flex-col gap-5 items-start p-5 rounded-t-[24px]">
+    <footer className={`bg-[#171717] flex flex-col gap-5 items-start p-5 rounded-t-[24px] ${className}`}>
       <p
         className="font-extrabold text-[32px] text-white tracking-[-0.04em] w-full"
-        style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+        style={{ fontFamily: "var(--font-geologica), sans-serif" }}
       >
         ToTheMoonTeam
       </p>

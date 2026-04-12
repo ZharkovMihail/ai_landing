@@ -113,12 +113,14 @@ export default function Process() {
   }, [start, stop]);
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-[30px] items-center px-5">
-      <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717] w-full">
+    <section ref={sectionRef} className="flex flex-col gap-[30px] items-center px-5 lg:px-[70px]">
+      <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717] w-full lg:text-[54px] lg:leading-[54px]">
         От идеи до запуска -{" "}
-        <span className="block">4 простых шага</span>
+        <span className="block lg:inline">4 простых шага</span>
       </h2>
-      <div className="bg-white flex flex-col gap-[10px] items-start p-5 rounded-[24px] w-full">
+
+      {/* Mobile layout */}
+      <div className="bg-white flex flex-col gap-[10px] items-start p-5 rounded-[24px] w-full lg:hidden">
         {steps.map((step, i) => {
           const isActive = activeStep === i;
           return (
@@ -127,7 +129,6 @@ export default function Process() {
               onClick={() => activate(i)}
               className={`bg-[#f5f5f5] border border-[#f7f7f7] flex gap-5 p-[14px] rounded-[10px] w-full text-left transition-all duration-300 ${isActive ? "items-start" : "items-center"}`}
             >
-              {/* Bar */}
               <div className="relative shrink-0 self-stretch w-[2px] bg-[#d1d1d1] overflow-hidden rounded-full">
                 <div
                   className="absolute top-0 left-0 w-full bg-[#E84D2A] rounded-full"
@@ -138,7 +139,6 @@ export default function Process() {
                   }}
                 />
               </div>
-              {/* Content */}
               <div className="flex flex-col gap-[10px] flex-1 min-w-0">
                 <p
                   className="font-semibold text-[16px] leading-[20px] transition-colors duration-200"
@@ -163,6 +163,66 @@ export default function Process() {
             </button>
           );
         })}
+      </div>
+
+      {/* Desktop layout: steps list (left) + description panel (right) */}
+      <div className="hidden lg:flex bg-white gap-[30px] items-start px-[30px] py-[50px] rounded-[44px] w-full">
+        {/* Left: step buttons (no inline descriptions) */}
+        <div className="flex flex-col gap-[10px] w-[382px] shrink-0">
+          {steps.map((step, i) => {
+            const isActive = activeStep === i;
+            return (
+              <button
+                key={step.number}
+                onClick={() => activate(i)}
+                className="bg-[#f5f5f5] border border-[#f7f7f7] flex gap-[30px] items-center p-[20px] rounded-[14px] w-full text-left transition-colors duration-200"
+              >
+                <div className="relative shrink-0 self-stretch w-[2px] bg-[#d1d1d1] overflow-hidden rounded-full">
+                  <div
+                    className="absolute top-0 left-0 w-full bg-[#E84D2A] rounded-full transition-transform duration-75"
+                    style={{
+                      height: "100%",
+                      transform: `scaleY(${isActive ? progress : 0})`,
+                      transformOrigin: "top",
+                    }}
+                  />
+                </div>
+                <p
+                  className="font-semibold text-[22px] leading-[24px] transition-colors duration-200"
+                  style={{ color: isActive ? "#171717" : "#737373" }}
+                >
+                  {step.number} {step.title}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right: video (only for step 0) or step description */}
+        <div className="flex flex-1 items-center justify-center min-h-[328px] overflow-hidden rounded-[24px] bg-[#f5f5f5]">
+          {activeStep === 0 ? (
+            <video
+              src="/images/processing.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover rounded-[24px]"
+            />
+          ) : (
+            <div className="flex flex-col gap-[20px] p-[40px] w-full">
+              <p className="font-extrabold text-[54px] leading-[54px] text-[#171717]">
+                {steps[activeStep].number}
+              </p>
+              <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
+                {steps[activeStep].title}
+              </p>
+              <p className="font-normal text-[22px] leading-[26px] text-[#737373]">
+                {steps[activeStep].description}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
