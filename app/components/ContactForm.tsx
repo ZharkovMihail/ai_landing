@@ -29,10 +29,12 @@ export default function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: parts.join(" | ") }),
       });
-      if (!res.ok) throw new Error();
+      console.log("[ContactForm] response status:", res.status);
+      if (!res.ok) throw new Error(`status ${res.status}`);
       setStatus("success");
       setForm({ name: "", phone: "", description: "" });
-    } catch {
+    } catch (err) {
+      console.error("[ContactForm] submit error:", err);
       setStatus("error");
     }
   };
@@ -42,6 +44,7 @@ export default function ContactForm() {
       id="contact"
       className="scroll-mt-[90px] bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5 lg:mx-0 lg:rounded-tl-[44px] lg:rounded-tr-[44px] lg:rounded-bl-none lg:rounded-br-none lg:px-[70px] lg:pt-[50px] lg:pb-[60px] lg:p-0"
     >
+      {status === "success" && <SuccessPopup onClose={() => setStatus("idle")} />}
       {/* Desktop branding header */}
       <p
         className="hidden lg:block font-extrabold text-[32px] text-[#171717] tracking-[-0.04em] w-full"
@@ -59,7 +62,6 @@ export default function ContactForm() {
       <div className="flex flex-col gap-[10px] w-full lg:hidden">
         <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} />
         <SubmitButton status={status} onSubmit={handleSubmit} />
-        {status === "success" && <p className="text-green-600 text-[14px]">Заявка отправлена!</p>}
         {status === "error" && <p className="text-[#E84D2A] text-[14px]">Ошибка отправки. Попробуйте ещё раз.</p>}
         <Disclaimer />
       </div>
@@ -117,7 +119,6 @@ export default function ContactForm() {
             <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} desktop />
           </div>
           <SubmitButton status={status} onSubmit={handleSubmit} desktop />
-          {status === "success" && <p className="text-green-600 text-[16px]">Заявка отправлена!</p>}
           {status === "error" && <p className="text-[#E84D2A] text-[16px]">Ошибка отправки. Попробуйте ещё раз.</p>}
           <Disclaimer />
         </div>
@@ -232,5 +233,36 @@ function Disclaimer() {
         обработку персональных данных
       </a>
     </p>
+  );
+}
+
+function SuccessPopup({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-5"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-[#171717] rounded-[24px] flex flex-col gap-[20px] lg:gap-[30px] items-center justify-center p-[30px] lg:p-[60px] w-full max-w-[400px] lg:max-w-[560px]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-[16px] right-[16px] text-[#f5f5f5] hover:opacity-60 transition-opacity"
+          aria-label="Закрыть"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M2 2L18 18M18 2L2 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+        <div className="relative shrink-0 size-[60px] lg:size-[100px]">
+          <Image src="/envelope.png" alt="Конверт" fill className="object-cover" unoptimized />
+        </div>
+        <div className="flex flex-col gap-[4px] items-center text-center text-[#f5f5f5] font-semibold text-[16px] leading-[20px] lg:text-[22px] lg:leading-[24px]">
+          <p>Заявка успешно отправлена!</p>
+          <p>В ближайшее время мы с вами свяжемся</p>
+        </div>
+      </div>
+    </div>
   );
 }
