@@ -5,9 +5,37 @@ import Image from "next/image";
 import { imgSocialIcon } from "@/app/lib/assets";
 import { RippleButton } from "@/app/components/RippleButton";
 
+type Status = "idle" | "loading" | "success" | "error";
+
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", phone: "", description: "" });
   const [contactError, setContactError] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+
+  const handleSubmit = async () => {
+    if (!isValidContact(form.phone)) {
+      setContactError(true);
+      return;
+    }
+    setStatus("loading");
+    const parts = [
+      form.name && `Имя: ${form.name}`,
+      `Контакт: ${form.phone}`,
+      form.description && `Описание: ${form.description}`,
+    ].filter(Boolean);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: parts.join(" | ") }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+      setForm({ name: "", phone: "", description: "" });
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section
@@ -30,7 +58,9 @@ export default function ContactForm() {
       {/* Mobile form */}
       <div className="flex flex-col gap-[10px] w-full lg:hidden">
         <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} />
-        <SubmitButton form={form} setContactError={setContactError} />
+        <SubmitButton status={status} onSubmit={handleSubmit} />
+        {status === "success" && <p className="text-green-600 text-[14px]">Заявка отправлена!</p>}
+        {status === "error" && <p className="text-[#E84D2A] text-[14px]">Ошибка отправки. Попробуйте ещё раз.</p>}
         <Disclaimer />
       </div>
 
@@ -43,7 +73,16 @@ export default function ContactForm() {
           </h2>
           <div className="flex items-center justify-between">
             <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
-              Напишите нам в Telegram или заполните форму
+              Напишите нам в{" "}
+              <a
+                href="https://t.me/isaev_wrk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:opacity-70 transition-opacity"
+              >
+                Telegram
+              </a>{" "}
+              или заполните форму
             </p>
             <a
               href="https://t.me/isaev_wrk"
@@ -77,7 +116,9 @@ export default function ContactForm() {
           <div className="flex flex-col gap-[10px]">
             <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} desktop />
           </div>
-          <SubmitButton form={form} setContactError={setContactError} desktop />
+          <SubmitButton status={status} onSubmit={handleSubmit} desktop />
+          {status === "success" && <p className="text-green-600 text-[16px]">Заявка отправлена!</p>}
+          {status === "error" && <p className="text-[#E84D2A] text-[16px]">Ошибка отправки. Попробуйте ещё раз.</p>}
           <Disclaimer />
         </div>
       </div>
@@ -156,31 +197,27 @@ function FormFields({
 }
 
 function SubmitButton({
-  form,
-  setContactError,
+  status,
+  onSubmit,
   desktop,
 }: {
-  form: { name: string; phone: string; description: string };
-  setContactError: (v: boolean) => void;
+  status: Status;
+  onSubmit: () => void;
   desktop?: boolean;
 }) {
-  const handleClick = () => {
-    if (!isValidContact(form.phone)) {
-      setContactError(true);
-      return;
-    }
-  };
+  const loading = status === "loading";
 
   return (
     <RippleButton
-      onClick={handleClick}
+      onClick={onSubmit}
+      disabled={loading}
       className={
         desktop
-          ? "bg-[#171717] font-semibold text-[28px] text-[#f9fafa] text-center px-[10px] py-[20px] rounded-[14px] w-full"
-          : "bg-[#171717] font-semibold text-[20px] text-[#f9fafa] text-center px-[10px] py-[14px] rounded-[15px] w-full"
+          ? "bg-[#171717] font-semibold text-[28px] text-[#f9fafa] text-center px-[10px] py-[20px] rounded-[14px] w-full disabled:opacity-60"
+          : "bg-[#171717] font-semibold text-[20px] text-[#f9fafa] text-center px-[10px] py-[14px] rounded-[15px] w-full disabled:opacity-60"
       }
     >
-      Оставить заявку
+      {loading ? "Отправка..." : "Оставить заявку"}
     </RippleButton>
   );
 }

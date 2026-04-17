@@ -70,10 +70,12 @@ export function RippleButton({
   onClick,
   className,
   children,
+  disabled,
 }: {
   onClick?: () => void;
   className: string;
   children: React.ReactNode;
+  disabled?: boolean;
 }) {
   const { ref, onMouseEnter, onMouseLeave, rippleEl } = useRipple();
 
@@ -81,6 +83,7 @@ export function RippleButton({
     <button
       ref={ref as React.RefObject<HTMLButtonElement>}
       onClick={onClick}
+      disabled={disabled}
       className={`relative overflow-hidden ${className}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
