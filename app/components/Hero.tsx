@@ -1,20 +1,43 @@
-import Image from "next/image";
-import { imgHeroBg } from "@/app/lib/assets";
-import QuizTrigger from "./QuizTrigger";
+import { imgHeroBg, imgHeroBgDesktop } from "@/app/lib/assets";
+import { RippleLink } from "@/app/components/RippleButton";
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col gap-[50px] items-center justify-end h-[calc(100lvh+120px)] px-5 pb-[200px] pt-5 rounded-b-[24px] overflow-hidden lg:h-[845px] lg:px-[70px] lg:pb-[40px] lg:pt-0 lg:rounded-b-[44px] lg:justify-center">
+    <section className="relative flex flex-col gap-[50px] items-center justify-end h-[calc(100lvh+120px)] px-5 pb-[200px] pt-5 rounded-b-[24px] overflow-hidden lg:h-[calc(100vh+60px)] lg:px-[70px] lg:pb-[40px] lg:pt-0 lg:rounded-b-[44px] lg:justify-center lg:gap-[70px]">
       {/* Background */}
       <div className="absolute inset-0 bg-[#171717] rounded-b-[24px] lg:rounded-b-[44px]" />
-      <Image
-        src={imgHeroBg}
-        alt=""
-        fill
-        className="object-cover rounded-b-[24px] lg:rounded-b-[44px]"
-        unoptimized
-        priority
-      />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-b-[24px] lg:rounded-b-[44px]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imgHeroBg}
+          alt=""
+          className="lg:hidden"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center 25%",
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imgHeroBgDesktop}
+          alt=""
+          className="hidden lg:block"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "top center",
+          }}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative flex flex-col gap-[10px] items-start w-full lg:gap-[30px] lg:items-center">
@@ -33,13 +56,12 @@ export default function Hero() {
 
       {/* CTA Buttons */}
       <div className="relative flex flex-col gap-[10px] items-start w-full lg:flex-row lg:justify-center lg:gap-5">
-        <a
+        <RippleLink
           href="#contact"
           className="w-full bg-[#171717] rounded-[10px] px-3 py-[14px] text-[#f7f7f7] text-[20px] font-semibold text-center block lg:w-[418px] lg:text-[28px] lg:py-5"
         >
           Обсудить проект
-        </a>
-        <QuizTrigger />
+        </RippleLink>
       </div>
     </section>
   );

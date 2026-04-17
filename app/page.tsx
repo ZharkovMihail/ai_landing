@@ -9,12 +9,12 @@ import Footer from "@/app/components/Footer";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen max-w-[390px] mx-auto lg:max-w-none lg:mx-0">
+    <main className="flex flex-col min-h-screen w-full">
       <Header />
       <Hero />
 
       {/* Page sections */}
-      <div className="flex flex-col gap-[60px] py-[60px] lg:gap-[120px] lg:py-[120px]">
+      <div className="flex flex-col gap-[60px] py-[60px] lg:gap-[120px] lg:pt-[120px] lg:pb-0">
         <Features />
         <Services />
         <Cases />

@@ -9,21 +9,25 @@ const steps = [
     number: "01",
     title: "Бесплатная оценка",
     description: "Опишите задачу, мы оценим сроки и стоимость за\u00A024\u00A0часа",
+    video: "/images/processing.mp4",
   },
   {
     number: "02",
     title: "Фиксация условий",
     description: "Договор с фиксированной ценой, чёткие сроки, никаких сюрпризов",
+    video: "/images/Comp 4.mp4",
   },
   {
     number: "03",
     title: "Разработка",
     description: "Работаем спринтами, показываем промежуточные результаты каждую неделю",
+    video: "/images/Comp 1.mp4",
   },
   {
     number: "04",
     title: "Запуск + поддержка",
     description: "Деплой, тестирование, передача и гарантийная поддержка",
+    video: "/images/Comp 3_2.mp4",
   },
 ];
 
@@ -165,17 +169,17 @@ export default function Process() {
         })}
       </div>
 
-      {/* Desktop layout: steps list (left) + description panel (right) */}
+      {/* Desktop layout: steps list (left) + video panel (right) */}
       <div className="hidden lg:flex bg-white gap-[30px] items-start px-[30px] py-[50px] rounded-[44px] w-full">
-        {/* Left: step buttons (no inline descriptions) */}
-        <div className="flex flex-col gap-[10px] w-[382px] shrink-0">
+        {/* Left: step buttons with inline description */}
+        <div className="flex flex-col gap-[10px] flex-none" style={{ width: "calc((100% - 60px) / 3)" }}>
           {steps.map((step, i) => {
             const isActive = activeStep === i;
             return (
               <button
                 key={step.number}
                 onClick={() => activate(i)}
-                className="bg-[#f5f5f5] border border-[#f7f7f7] flex gap-[30px] items-center p-[20px] rounded-[14px] w-full text-left transition-colors duration-200"
+                className={`bg-[#f5f5f5] border border-[#f7f7f7] flex gap-[30px] p-[20px] rounded-[14px] w-full text-left transition-all duration-300 ${isActive ? "items-start" : "items-center"}`}
               >
                 <div className="relative shrink-0 self-stretch w-[2px] bg-[#d1d1d1] overflow-hidden rounded-full">
                   <div
@@ -187,41 +191,43 @@ export default function Process() {
                     }}
                   />
                 </div>
-                <p
-                  className="font-semibold text-[22px] leading-[24px] transition-colors duration-200"
-                  style={{ color: isActive ? "#171717" : "#737373" }}
-                >
-                  {step.number} {step.title}
-                </p>
+                <div className="flex flex-col gap-[10px] flex-1 min-w-0">
+                  <p
+                    className="font-semibold text-[22px] leading-[24px] transition-colors duration-200"
+                    style={{ color: isActive ? "#171717" : "#737373" }}
+                  >
+                    {step.number} {step.title}
+                  </p>
+                  {step.description && (
+                    <div
+                      className="overflow-hidden transition-all duration-300 ease-in-out"
+                      style={{
+                        maxHeight: isActive ? "120px" : "0px",
+                        opacity: isActive ? 1 : 0,
+                      }}
+                    >
+                      <p className="font-normal text-[22px] leading-[26px] text-[#737373]">
+                        {step.description}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Right: video (only for step 0) or step description */}
+        {/* Right: video for active step */}
         <div className="flex flex-1 items-center justify-center min-h-[328px] overflow-hidden rounded-[24px] bg-[#f5f5f5]">
-          {activeStep === 0 ? (
-            <video
-              src="/images/processing.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover rounded-[24px]"
-            />
-          ) : (
-            <div className="flex flex-col gap-[20px] p-[40px] w-full">
-              <p className="font-extrabold text-[54px] leading-[54px] text-[#171717]">
-                {steps[activeStep].number}
-              </p>
-              <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
-                {steps[activeStep].title}
-              </p>
-              <p className="font-normal text-[22px] leading-[26px] text-[#737373]">
-                {steps[activeStep].description}
-              </p>
-            </div>
-          )}
+          <video
+            key={steps[activeStep].video}
+            src={steps[activeStep].video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover rounded-[24px]"
+          />
         </div>
       </div>
     </section>

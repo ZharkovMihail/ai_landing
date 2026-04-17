@@ -1,33 +1,35 @@
 import Image from "next/image";
-import { imgCaseCover, imgCaseCover1, imgCaseCover2, imgCaseCover3 } from "@/app/lib/assets";
+import { imgCaseCover, imgCaseCover1, imgCaseCover3, imgCaseCoverBlaber } from "@/app/lib/assets";
 
 const cases = [
   {
     // Featured on desktop (full-width), first on mobile
-    image: imgCaseCover2,
+    tag: "AI-решение",
+    image: imgCaseCoverBlaber,
     title: "Приложение для OZON — my.blaber.ai",
     description:
-      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и Yandex и дает оценку каждому сайту на наличие негативной и позитивной информации.",
+      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и\u00A0Yandex и\u00A0дает оценку каждому сайту на\u00A0наличие негативной и\u00A0позитивной информации.",
   },
   {
     tag: "вайбкодинг",
     image: imgCaseCover3,
     title: "REPUTATE",
     description:
-      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и Yandex и дает оценку каждому сайту на наличие негативной и позитивной информации.",
+      "AI-платформа, которая автоматически анализирует вебконтент. Благодаря алгоритмам AI платформа проводит анализ выдачи поисковой системы Google и\u00A0Yandex и\u00A0дает оценку каждому сайту на\u00A0наличие негативной и\u00A0позитивной информации.",
+  },
+  {
+    tag: "автоматизация",
+    image: imgCaseCover,
+    title: "Сервис по внутренней аналитике от\u00A0ИдеалТРЕЙД",
+    description:
+      "Реализованы интеграции с\u00A01C, mango api, Google Docs и\u00A0внутренней CRM. Реализовано распознавание голоса и\u00A0аналитика звонков по\u00A0голосу.",
   },
   {
     tag: "вайбкодинг",
     image: imgCaseCover1,
     title: "Проект под NDA",
     description:
-      "Разработан веб-сервис для общения с языковой моделью в стиле заданного персонажа или набора характеристик с возможностью гибкой настройки. Платформа поддерживает генерацию AI-контента, включая изображения, с перспективой добавления аудио и видео.",
-  },
-  {
-    image: imgCaseCover,
-    title: "Сервис по внутренней аналитике от ИдеалТРЕЙД",
-    description:
-      "Реализованы интеграции с 1C, mango api, Google Docs и внутренней CRM. Реализовано распознавание голоса и аналитика звонков по голосу.",
+      "Разработан веб-сервис для общения с\u00A0языковой моделью в\u00A0стиле заданного персонажа или набора характеристик с\u00A0возможностью гибкой настройки. Платформа поддерживает генерацию AI-контента, включая изображения, с\u00A0перспективой добавления аудио и\u00A0видео.",
   },
 ];
 
@@ -49,7 +51,7 @@ export default function Cases() {
       <div className="hidden lg:flex lg:flex-col lg:gap-[50px] lg:w-full">
         {/* Featured case */}
         <div className="flex flex-col gap-[10px] w-full">
-          <div className="h-[232px] relative rounded-[14px] w-full overflow-hidden shrink-0">
+          <div className="relative rounded-[14px] w-full overflow-hidden shrink-0" style={{ height: 0, paddingTop: "calc((100% - 60px) * 3 / 16)" }}>
             <Image
               src={cases[0].image}
               alt=""
@@ -57,6 +59,13 @@ export default function Cases() {
               className="object-cover rounded-[14px]"
               unoptimized
             />
+            {cases[0].tag && (
+              <div className="absolute left-[11px] top-[10px] backdrop-blur-[5px] bg-[rgba(69,69,69,0.6)] px-[10px] py-[6px] rounded-[5px]">
+                <span className="font-semibold text-[16px] leading-[20px] text-[#f5f5f5]">
+                  {cases[0].tag}
+                </span>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-[10px]">
             <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
@@ -89,7 +98,7 @@ export default function Cases() {
                 )}
               </div>
               <div className="flex flex-col gap-[10px]">
-                <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
+                <p className="font-semibold text-[22px] leading-[24px] text-[#171717] min-h-[48px]">
                   {c.title}
                 </p>
                 <p className="font-normal text-[22px] leading-[26px] text-[#454545]">

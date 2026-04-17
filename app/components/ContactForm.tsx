@@ -3,14 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import { imgSocialIcon } from "@/app/lib/assets";
+import { RippleButton } from "@/app/components/RippleButton";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", phone: "", description: "" });
+  const [contactError, setContactError] = useState(false);
 
   return (
     <section
       id="contact"
-      className="bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5 lg:mx-0 lg:rounded-tl-[44px] lg:rounded-tr-[44px] lg:rounded-bl-none lg:rounded-br-none lg:px-[70px] lg:pt-[50px] lg:pb-[60px] lg:p-0"
+      className="scroll-mt-[90px] bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5 lg:mx-0 lg:rounded-tl-[44px] lg:rounded-tr-[44px] lg:rounded-bl-none lg:rounded-br-none lg:px-[70px] lg:pt-[50px] lg:pb-[60px] lg:p-0"
     >
       {/* Desktop branding header */}
       <p
@@ -27,8 +29,8 @@ export default function ContactForm() {
 
       {/* Mobile form */}
       <div className="flex flex-col gap-[10px] w-full lg:hidden">
-        <FormFields form={form} setForm={setForm} />
-        <SubmitButton />
+        <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} />
+        <SubmitButton form={form} setContactError={setContactError} />
         <Disclaimer />
       </div>
 
@@ -37,20 +39,31 @@ export default function ContactForm() {
         {/* Left column */}
         <div className="flex flex-1 flex-col gap-[30px] min-w-0">
           <h2 className="font-extrabold text-[54px] leading-[54px] text-[#171717]">
-            Готовы обсудить<br />ваш проект?
+            Готовы обсудить ваш проект?
           </h2>
-          <div className="flex flex-col justify-between flex-1 gap-[30px]">
+          <div className="flex items-center justify-between">
+            <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
+              Напишите нам в Telegram или заполните форму
+            </p>
+            <a
+              href="https://t.me/isaev_wrk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-[25px] h-[25px] shrink-0 block ml-4"
+            >
+              <Image src={imgSocialIcon} alt="Telegram" fill className="object-cover" unoptimized />
+            </a>
+          </div>
+          <div className="flex flex-col gap-[10px]">
             <div className="flex items-center justify-between">
               <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
                 tothemoonteam@gmail.com
               </p>
               <a
-                href="https://t.me/isaev_wrk"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative w-[25px] h-[25px] shrink-0 block"
+                href="mailto:tothemoonteam@gmail.com"
+                className="relative w-[25px] h-[25px] shrink-0 block ml-4"
               >
-                <Image src={imgSocialIcon} alt="Telegram" fill className="object-cover" unoptimized />
+                <Image src={imgSocialIcon} alt="Email" fill className="object-cover" unoptimized />
               </a>
             </div>
             <p className="font-semibold text-[12px] leading-[20px] text-[#171717]">
@@ -62,9 +75,9 @@ export default function ContactForm() {
         {/* Right column */}
         <div className="flex flex-1 flex-col gap-[30px] min-w-0">
           <div className="flex flex-col gap-[10px]">
-            <FormFields form={form} setForm={setForm} desktop />
+            <FormFields form={form} setForm={setForm} contactError={contactError} setContactError={setContactError} desktop />
           </div>
-          <SubmitButton desktop />
+          <SubmitButton form={form} setContactError={setContactError} desktop />
           <Disclaimer />
         </div>
       </div>
@@ -72,13 +85,30 @@ export default function ContactForm() {
   );
 }
 
+function isValidContact(value: string): boolean {
+  const v = value.trim();
+  if (!v) return false;
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const digits = v.replace(/[\s\-\(\)]/g, "");
+  const isPhone =
+    /^\+\d{7,15}$/.test(digits) ||
+    /^[78]\d{10}$/.test(digits) ||
+    /^\d{10}$/.test(digits);
+  const isTelegram = /^@[a-zA-Z0-9_]{3,}$/.test(v);
+  return isEmail || isPhone || isTelegram;
+}
+
 function FormFields({
   form,
   setForm,
+  contactError,
+  setContactError,
   desktop,
 }: {
   form: { name: string; phone: string; description: string };
   setForm: (f: { name: string; phone: string; description: string }) => void;
+  contactError: boolean;
+  setContactError: (v: boolean) => void;
   desktop?: boolean;
 }) {
   const inputClass = desktop
@@ -94,13 +124,26 @@ function FormFields({
         onChange={(e) => setForm({ ...form, name: e.target.value })}
         className={inputClass}
       />
-      <input
-        type="tel"
-        placeholder="Телефон"
-        value={form.phone}
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-        className={inputClass}
-      />
+      <div className="w-full">
+        <input
+          type="text"
+          placeholder="Email / телефон / @telegram"
+          value={form.phone}
+          onChange={(e) => {
+            setForm({ ...form, phone: e.target.value });
+            if (contactError && isValidContact(e.target.value)) setContactError(false);
+          }}
+          onBlur={() => {
+            if (form.phone && !isValidContact(form.phone)) setContactError(true);
+          }}
+          className={`${inputClass} ${contactError ? "ring-2 ring-[#E84D2A]" : ""}`}
+        />
+        {contactError && (
+          <p className={`text-[#E84D2A] mt-1 ${desktop ? "text-[16px]" : "text-[13px]"}`}>
+            Введите email, телефон или @telegram
+          </p>
+        )}
+      </div>
       <textarea
         placeholder="Описание задачи (опционально)"
         value={form.description}
@@ -112,9 +155,25 @@ function FormFields({
   );
 }
 
-function SubmitButton({ desktop }: { desktop?: boolean }) {
+function SubmitButton({
+  form,
+  setContactError,
+  desktop,
+}: {
+  form: { name: string; phone: string; description: string };
+  setContactError: (v: boolean) => void;
+  desktop?: boolean;
+}) {
+  const handleClick = () => {
+    if (!isValidContact(form.phone)) {
+      setContactError(true);
+      return;
+    }
+  };
+
   return (
-    <button
+    <RippleButton
+      onClick={handleClick}
       className={
         desktop
           ? "bg-[#171717] font-semibold text-[28px] text-[#f9fafa] text-center px-[10px] py-[20px] rounded-[14px] w-full"
@@ -122,7 +181,7 @@ function SubmitButton({ desktop }: { desktop?: boolean }) {
       }
     >
       Оставить заявку
-    </button>
+    </RippleButton>
   );
 }
 
