@@ -143,7 +143,7 @@ export default function Process() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-[10px] flex-1 min-w-0">
+              <div className="flex flex-col flex-1 min-w-0">
                 <p
                   className="font-semibold text-[16px] leading-[20px] transition-colors duration-200"
                   style={{ color: isActive ? "#171717" : "#737373" }}
@@ -156,6 +156,7 @@ export default function Process() {
                     style={{
                       maxHeight: isActive ? "100px" : "0px",
                       opacity: isActive ? 1 : 0,
+                      marginTop: isActive ? "10px" : "0px",
                     }}
                   >
                     <p className="font-normal text-[16px] leading-[20px] text-[#737373]">
@@ -191,7 +192,7 @@ export default function Process() {
                     }}
                   />
                 </div>
-                <div className="flex flex-col gap-[10px] flex-1 min-w-0">
+                <div className="flex flex-col flex-1 min-w-0">
                   <p
                     className="font-semibold text-[22px] leading-[24px] transition-colors duration-200"
                     style={{ color: isActive ? "#171717" : "#737373" }}
@@ -204,6 +205,7 @@ export default function Process() {
                       style={{
                         maxHeight: isActive ? "120px" : "0px",
                         opacity: isActive ? 1 : 0,
+                        marginTop: isActive ? "10px" : "0px",
                       }}
                     >
                       <p className="font-normal text-[22px] leading-[26px] text-[#737373]">
