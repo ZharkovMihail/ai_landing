@@ -9,25 +9,25 @@ const steps = [
     number: "01",
     title: "Бесплатная оценка",
     description: "Опишите задачу, мы оценим сроки и стоимость за\u00A024\u00A0часа",
-    video: "/images/processing.mp4",
+    video: "/images/Main1.mp4",
   },
   {
     number: "02",
     title: "Фиксация условий",
     description: "Договор с фиксированной ценой, чёткие сроки, никаких сюрпризов",
-    video: "/images/Comp 4.mp4",
+    video: "/images/Main2.mp4",
   },
   {
     number: "03",
     title: "Разработка",
     description: "Работаем спринтами, показываем промежуточные результаты каждую неделю",
-    video: "/images/Comp 1.mp4",
+    video: "/images/Main3.mp4",
   },
   {
     number: "04",
     title: "Запуск + поддержка",
     description: "Деплой, тестирование, передача и гарантийная поддержка",
-    video: "/images/Comp 3_2.mp4",
+    video: "/images/Main4.mp4",
   },
 ];
 
