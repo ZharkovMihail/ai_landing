@@ -18,7 +18,7 @@ export default function Header() {
         <nav className="hidden lg:flex items-center gap-[40px]">
           <a href="#services" className="font-semibold text-[22px] leading-[24px] text-[#f5f5f5] transition-colors duration-200 hover:text-[#E15B34]">Услуги</a>
           <a href="#cases" className="font-semibold text-[22px] leading-[24px] text-[#f5f5f5] transition-colors duration-200 hover:text-[#E15B34]">Кейсы</a>
-          <a href="#contact" className="font-semibold text-[22px] leading-[24px] text-[#f5f5f5] transition-colors duration-200 hover:text-[#E15B34]">Контакты</a>
+          <a href="#footer" className="font-semibold text-[22px] leading-[24px] text-[#f5f5f5] transition-colors duration-200 hover:text-[#E15B34]">Контакты</a>
         </nav>
 
         {/* Mobile burger */}

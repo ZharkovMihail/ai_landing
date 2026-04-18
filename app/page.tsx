@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
 
       {/* Page sections */}
-      <div className="flex flex-col gap-[60px] py-[60px] lg:gap-[120px] lg:pt-[120px] lg:pb-0">
+      <div className="flex flex-col gap-[60px] py-[60px] lg:gap-[120px] lg:pt-[120px] lg:pb-[60px]">
         <Features />
         <Services />
         <Cases />
@@ -22,7 +22,7 @@ export default function Home() {
         <ContactForm />
       </div>
 
-      <Footer className="lg:hidden" />
+      <Footer />
     </main>
   );
 }

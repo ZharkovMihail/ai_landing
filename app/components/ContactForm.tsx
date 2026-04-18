@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { imgSocialIcon } from "@/app/lib/assets";
 import { RippleButton } from "@/app/components/RippleButton";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -42,16 +41,9 @@ export default function ContactForm() {
   return (
     <section
       id="contact"
-      className="scroll-mt-[90px] bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5 lg:mx-0 lg:rounded-tl-[44px] lg:rounded-tr-[44px] lg:rounded-bl-none lg:rounded-br-none lg:px-[70px] lg:pt-[50px] lg:pb-[60px] lg:p-0"
+      className="scroll-mt-[90px] bg-white flex flex-col gap-[30px] items-start p-5 rounded-[24px] mx-5 lg:mx-[40px] lg:rounded-[44px] lg:px-[30px] lg:py-[50px]"
     >
       {status === "success" && <SuccessPopup onClose={() => setStatus("idle")} />}
-      {/* Desktop branding header */}
-      <p
-        className="hidden lg:block font-extrabold text-[32px] text-[#171717] tracking-[-0.04em] w-full"
-        style={{ fontFamily: "var(--font-geologica), sans-serif" }}
-      >
-        ToTheMoonTeam
-      </p>
 
       {/* Mobile heading */}
       <h2 className="font-extrabold text-[30px] leading-[32px] text-[#171717] lg:hidden">
@@ -68,49 +60,11 @@ export default function ContactForm() {
 
       {/* Desktop two-column layout */}
       <div className="hidden lg:flex lg:gap-[30px] lg:items-start lg:w-full">
-        {/* Left column */}
-        <div className="flex flex-1 flex-col gap-[30px] min-w-0">
+        {/* Left column — heading only */}
+        <div className="flex flex-1 min-w-0">
           <h2 className="font-extrabold text-[54px] leading-[54px] text-[#171717]">
             Готовы обсудить ваш проект?
           </h2>
-          <div className="flex items-center justify-between">
-            <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
-              Напишите нам в{" "}
-              <a
-                href="https://t.me/isaev_wrk"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:opacity-70 transition-opacity"
-              >
-                Telegram
-              </a>{" "}
-              или заполните форму
-            </p>
-            <a
-              href="https://t.me/isaev_wrk"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative w-[25px] h-[25px] shrink-0 block ml-4"
-            >
-              <Image src={imgSocialIcon} alt="Telegram" fill className="object-cover" unoptimized />
-            </a>
-          </div>
-          <div className="flex flex-col gap-[10px]">
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-[22px] leading-[24px] text-[#171717]">
-                tothemoonteam@gmail.com
-              </p>
-              <a
-                href="mailto:tothemoonteam@gmail.com"
-                className="relative w-[25px] h-[25px] shrink-0 block ml-4"
-              >
-                <Image src={imgSocialIcon} alt="Email" fill className="object-cover" unoptimized />
-              </a>
-            </div>
-            <p className="font-semibold text-[12px] leading-[20px] text-[#171717]">
-              Политика конфиденциальности
-            </p>
-          </div>
         </div>
 
         {/* Right column */}
@@ -226,9 +180,7 @@ function SubmitButton({
 function Disclaimer() {
   return (
     <p className="font-normal text-[16px] leading-[20px] text-[#737373]">
-      Нажимая на кнопку, я соглашаюсь
-      <br />
-      на{" "}
+      Нажимая на кнопку, я соглашаюсь на{" "}
       <a href="/privacy" className="underline">
         обработку персональных данных
       </a>
